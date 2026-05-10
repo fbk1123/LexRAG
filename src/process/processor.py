@@ -1,6 +1,5 @@
 import json
 from pathlib import Path
-from tqdm import tqdm
 
 class QuestionGenerator:
     def __init__(self, process_type: str):

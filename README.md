@@ -25,6 +25,11 @@ To advance RAG system research in the legal domain, we’ve proposed LexiT, a mo
 <img src="https://github.com/user-attachments/assets/5464a404-98c6-45b6-90a8-65b936824cf1" width="350px">
 </div>
 
+
+## :test_tube: Non-legal RAG pollution experiments
+
+LexRAG now includes a domain-neutral prompt builder and a small synthetic demo for testing whether retrieved false advertising snippets leak into generated answers. See [`docs/non_legal_rag_pollution.md`](docs/non_legal_rag_pollution.md) for recommended public datasets, conversion schemas, demo data generation, retrieval commands, and guarded-vs-unguarded generation examples.
+
 ## :rocket: Pipeline
 ### :bookmark_tabs: Processor
 The processor is responsible for converting the conversation into queries used by the retriever. There are several strategies for constructing the query, including using the last question, the entire conversation context, or the entire query history. Run ```./src/pipeline.py``` :

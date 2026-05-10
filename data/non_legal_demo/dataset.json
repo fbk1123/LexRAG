@@ -1,0 +1,53 @@
+[
+  {
+    "id": 1,
+    "type": "home_energy_support",
+    "conversation": [
+      {
+        "user": "我家的太阳能板最近发电量下降，日常维护应该先检查什么？",
+        "assistant": "先检查面板表面是否有灰尘、花粉或鸟粪遮挡，再查看逆变器告警和线路外观。清洁时使用清水和软刷，避免磨损表面。",
+        "keyword": [
+          "solar panels",
+          "maintenance",
+          "cleaning"
+        ],
+        "article": [
+          "solar_001"
+        ],
+        "article_context": []
+      },
+      {
+        "user": "清洁太阳能板时能不能用强力清洁剂？",
+        "assistant": "不建议使用强力或研磨性清洁剂；通常清水、软刷和低压冲洗就足够。如果仍有异常，应联系安装商检查。",
+        "keyword": [
+          "solar panels",
+          "cleaning",
+          "abrasive"
+        ],
+        "article": [
+          "solar_001"
+        ],
+        "article_context": []
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "type": "home_energy_support",
+    "conversation": [
+      {
+        "user": "家用储能电池放在车库里，安全上要注意什么？",
+        "assistant": "应保持通风，远离热源和易燃物，并使用厂家认可的电池管理系统；如果出现鼓包、烟雾或异味，应立即停止使用并联系专业人员。",
+        "keyword": [
+          "home battery",
+          "safety",
+          "ventilation"
+        ],
+        "article": [
+          "battery_001"
+        ],
+        "article_context": []
+      }
+    ]
+  }
+]
