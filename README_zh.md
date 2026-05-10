@@ -24,6 +24,10 @@
 <img src="https://github.com/user-attachments/assets/5464a404-98c6-45b6-90a8-65b936824cf1" width="350px">
 </div>
 
+## :test_tube: 非法律 RAG 污染实验
+
+LexRAG 现在包含领域无关的 PromptBuilder，以及一个小型合成数据示例，可用于测试“被检索到的虚假广告片段是否会泄漏到生成回答中”。推荐数据集、数据格式转换、示例数据生成、检索命令，以及带/不带广告防护提示词的生成对比方法，见 [`docs/non_legal_rag_pollution.md`](docs/non_legal_rag_pollution.md)。
+
 ## :rocket: Pipeline
 ### :bookmark_tabs: Processor
 Processor将对话转换成Retriever使用的查询。我们支持几种构建查询的策略，包括使用最后一个问题、整个对话上下文或整个查询历史等。 运行 ```./src/pipeline.py``` :

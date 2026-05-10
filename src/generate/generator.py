@@ -1,7 +1,6 @@
 import os
 import logging
 import json
-import json
 import time
 from typing import List
 from tqdm import tqdm
@@ -10,7 +9,7 @@ from openai import OpenAI
 import httpx
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from generate.prompt_builder import LegalPromptBuilder, CustomSystemPromptBuilder, FullCustomPromptBuilder
+from generate.prompt_builder import LegalPromptBuilder, GeneralPromptBuilder, CustomSystemPromptBuilder, FullCustomPromptBuilder
 
 class BaseGenerator:
     """Base class for all generators"""
@@ -27,6 +26,18 @@ class BaseGenerator:
         with open("data/generated_responses.jsonl", "a", encoding="utf-8") as f:
             for item_id in sorted(result_dict.keys(), key=lambda x: int(x.split("_")[0])):  
                 f.write(json.dumps(result_dict[item_id], ensure_ascii=False) + "\n")
+
+    @staticmethod
+    def _format_article(article):
+        """Return retriever evidence with both title and body for generic RAG corpora."""
+        if isinstance(article, str):
+            return article
+
+        name = article.get("name") or article.get("title") or article.get("id") or ""
+        content = article.get("content") or article.get("text") or article.get("body") or ""
+        if name and content:
+            return f"{name}: {content}"
+        return name or content
             
 class OpenAIGenerator(BaseGenerator):
     """Generator for OpenAI API models"""
@@ -98,7 +109,7 @@ class OpenAIGenerator(BaseGenerator):
                                  key=lambda x: x["score"], 
                                  reverse=True)[:top_n]
         
-            return [item["article"]["name"] for item in sorted_recall]
+            return [self._format_article(item["article"]) for item in sorted_recall]
         
         except Exception as e:
             logging.error(f"Error processing sample {sample_id}: {str(e)}")
@@ -216,7 +227,7 @@ class ZhipuGenerator(BaseGenerator):
                                  key=lambda x: x["score"], 
                                  reverse=True)[:top_n]
         
-            return [item["article"]["name"] for item in sorted_recall]
+            return [self._format_article(item["article"]) for item in sorted_recall]
         
         except Exception as e:
             logging.error(f"Error processing sample {sample_id}: {str(e)}")
@@ -364,7 +375,7 @@ class VLLMGenerator(BaseGenerator):
                                  key=lambda x: x["score"], 
                                  reverse=True)[:top_n]
         
-            return [item["article"]["name"] for item in sorted_recall]
+            return [self._format_article(item["article"]) for item in sorted_recall]
         
         except Exception as e:
             logging.error(f"Error processing sample {sample_id}: {str(e)}")
@@ -477,7 +488,7 @@ class HuggingFaceGenerator(BaseGenerator):
                                  key=lambda x: x["score"], 
                                  reverse=True)[:top_n]
         
-            return [item["article"]["name"] for item in sorted_recall]
+            return [self._format_article(item["article"]) for item in sorted_recall]
         
         except Exception as e:
             logging.error(f"Error processing sample {sample_id}: {str(e)}")
@@ -631,7 +642,7 @@ class LocalGenerator(BaseGenerator):
                                  key=lambda x: x["score"], 
                                  reverse=True)[:top_n]
         
-            return [item["article"]["name"] for item in sorted_recall]
+            return [self._format_article(item["article"]) for item in sorted_recall]
         
         except Exception as e:
             self.logger.error(f"Error processing sample {sample_id}: {str(e)}")
